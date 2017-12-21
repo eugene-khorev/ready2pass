@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::namespace('Api')->group(function() {
-    Route::post('/login', 'LoginController@login')->name('login');
+    Route::post('/register', 'RegisterController@register');
+    Route::post('/login', 'LoginController@login');
     Route::post('/login/refresh', 'LoginController@refresh');
     Route::post('/logout', 'LoginController@logout');
 });
