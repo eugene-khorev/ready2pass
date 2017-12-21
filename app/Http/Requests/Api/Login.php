@@ -12,7 +12,7 @@ class Login extends \App\Http\Requests\Api
     public function rules()
     {
         return [
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required'
         ];
     }
