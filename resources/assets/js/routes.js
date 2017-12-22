@@ -1,4 +1,4 @@
 export default {
-    '#login': 'login.vue',
-    '#register': 'register.vue',
+  '#login': 'login.vue',
+  '#register': 'register.vue',
 };

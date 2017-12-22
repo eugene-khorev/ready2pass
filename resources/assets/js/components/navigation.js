@@ -1,5 +1,16 @@
+import NavigationLink from './navigation-link.vue';
+
 export default {
-    mounted() {
-        console.log(window.location.hash);
-    }
+  data: function () {
+    return {
+      items: [
+        { hash: '#login', title: 'Login' },
+        { hash: '#register', title: 'Register' },
+      ],
+    };
+  },
+
+  components: {
+    NavigationLink,
+  }
 };

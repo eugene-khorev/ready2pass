@@ -1,5 +1,5 @@
 export default {
-    mounted() {
-        console.log(window.location.hash);
-    }
+  mounted() {
+    console.log(window.location.hash);
+  }
 };
