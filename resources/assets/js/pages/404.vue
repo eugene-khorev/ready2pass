@@ -1,6 +1,12 @@
 <template>
-  <main-layout>
-    <p>Page not found</p>
+  <main-layout :isUserAuthorized="isUserAuthorized">
+    <div class="panel panel-default">
+        <div class="panel-heading">Not found</div>
+
+        <div class="panel-body">
+            <p>Page you are looking for could not be found</p>
+        </div>
+    </div>
   </main-layout>
 </template>
 

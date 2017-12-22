@@ -7,24 +7,28 @@
 require('./bootstrap');
 
 import routes from './routes';
+import oauth from './oauth';
 
 window.Vue = require('vue');
 
 const app = new Vue({
   el: '#app',
+
   data: {
     currentRoute: window.location.hash,
   },
+
   computed: {
-    ViewComponent() {
-      const matchingView = routes[this.currentRoute]
-      return matchingView ?
-        require('./pages/' + matchingView) :
-        require('./pages/404.vue');
+    view() {
+      const matchingView = routes[this.currentRoute];
+      return (matchingView && matchingView.isProtected === oauth.isUserAuthorized())
+        ? require('./pages/' + matchingView.component)
+        : require('./pages/404.vue');
     }
   },
+
   render(h) {
-    return h(this.ViewComponent);
+    return h(this.view);
   }
 });
 

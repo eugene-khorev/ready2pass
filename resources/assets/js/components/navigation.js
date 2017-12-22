@@ -1,16 +1,18 @@
+import routes from '../routes';
 import NavigationLink from './navigation-link.vue';
 
 export default {
+  props: [
+    'isUserAuthorized'
+  ],
+
   data: function () {
     return {
-      items: [
-        { hash: '#login', title: 'Login' },
-        { hash: '#register', title: 'Register' },
-      ],
+      items: routes,
     };
   },
 
   components: {
     NavigationLink,
-  }
+  },
 };

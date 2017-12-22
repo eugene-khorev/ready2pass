@@ -1,5 +1,5 @@
 <template>
-    <main-layout>
+    <main-layout :isUserAuthorized="isUserAuthorized">
         <div class="panel panel-default">
             <div class="panel-heading">Login</div>
 
