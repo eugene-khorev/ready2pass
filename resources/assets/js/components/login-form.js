@@ -21,7 +21,6 @@ export default {
         .catch(function(error) {
           this.isInputDisabled = false;
           this.errors = error.response.data.error || {};
-          console.log(this.errors)
           this.$emit('unauthenticated');
         }.bind(this));
     },

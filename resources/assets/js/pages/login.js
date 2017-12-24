@@ -8,6 +8,6 @@ export default {
   methods: {
     authenticated: function () {
       this.$router.push({ path: '/passwords' });
-    }
+    },
   },
 }

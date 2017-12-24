@@ -13,7 +13,7 @@ class Register extends \App\Http\Requests\Api
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
         ];
     }

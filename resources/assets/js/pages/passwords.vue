@@ -3,7 +3,7 @@
         <div class="panel-heading">Passwords</div>
 
         <div class="panel-body">
-            Here goes the passwords
+            Here goes user password list
         </div>
     </div>
 </template>

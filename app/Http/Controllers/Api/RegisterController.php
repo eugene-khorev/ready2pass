@@ -20,7 +20,7 @@ class RegisterController extends \App\Http\Controllers\Controller
      */
     public function register(OAuthProxy $proxy, Register $request)
     {
-        $name = $request->get('email');
+        $name = $request->get('name');
         $email = $request->get('email');
         $password = $request->get('password');
         
