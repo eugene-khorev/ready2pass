@@ -22,6 +22,7 @@ const OAuth = {
             resolve();
           }.bind(this))
           .catch(function (error) {
+            console.log(error.response)
             localStorage.setItem('accessToken', '');
             reject(error);
           });

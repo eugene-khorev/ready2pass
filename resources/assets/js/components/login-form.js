@@ -4,12 +4,15 @@ export default {
       isInputDisabled: false,
       email: '',
       password: '',
+      errors: {},
     }
   },
 
   methods: {
     onLogin: function() {
       this.isInputDisabled = true;
+      this.errors = {};
+
       this.$auth.authenticate(this.email, this.password,)
         .then(function() {
           this.isInputDisabled = false;
@@ -17,8 +20,9 @@ export default {
         }.bind(this))
         .catch(function(error) {
           this.isInputDisabled = false;
+          this.errors = error.response.data.error || {};
+          console.log(this.errors)
           this.$emit('unauthenticated');
-          console.log(error);
         }.bind(this));
     },
   }

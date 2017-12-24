@@ -1,30 +1,24 @@
 <template>
     <form class="form-horizontal" v-on:submit.prevent="onLogin">
-        <div class="form-group has-error">
+        <div class="form-group" v-bind:class="{ 'has-error': errors['email'] }">
             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
             <div class="col-md-6">
-                <input id="email" type="email" class="form-control" name="email" placeholder="E-mail" required autofocus v-model="email" :disabled="isInputDisabled">
-
-                @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>$errors->first('email')</strong>
+                <input id="email" type="text" class="form-control" name="email" placeholder="E-mail" autofocus v-model="email" :disabled="isInputDisabled">
+                <span class="help-block" v-if="errors['email']">
+                    <strong v-for="message in errors['email']">{{ message }}</strong>
                 </span>
-                @endif
             </div>
         </div>
 
-        <div class="form-group has-error">
+        <div class="form-group" v-bind:class="{ 'has-error': errors['password'] }">
             <label for="password" class="col-md-4 control-label">Password</label>
 
             <div class="col-md-6">
-                <input id="password" type="password" class="form-control" name="password" required v-model="password" :disabled="isInputDisabled">
-
-                @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>$errors->first('password')</strong>
+                <input id="password" type="password" class="form-control" name="password" v-model="password" :disabled="isInputDisabled">
+                <span class="help-block" v-if="errors['password']">
+                    <strong v-for="message in errors['password']">{{ message }}</strong>
                 </span>
-                @endif
             </div>
         </div>
 
