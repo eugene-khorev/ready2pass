@@ -1,22 +1,48 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import _find from 'lodash/find';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import Trans from './plugins/trans';
+import OAuth from './plugins/oauth';
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import App from './components/app-container.vue';
+import Login from './pages/login.vue';
+import Register from './pages/register.vue';
+import Passwords from './pages/passwords.vue';
+import Logout from './pages/logout.vue';
+import NotFound from './pages/404.vue';
 
+const appBlock = document.getElementById('app');
+const messages = $(appBlock).data('messages');
+
+Vue.use(Trans, { messages });
+Vue.use(OAuth);
+
+const routes = [
+  { path: '/login',     title: 'navigation.login',      component: Login,     protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
+  { path: '/register',  title: 'navigation.register',   component: Register,  protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
+  { path: '/passwords', title: 'navigation.passwords',  component: Passwords, protected: true,  beforeEnter: (to, from, next) => { next(!!localStorage.getItem('accessToken')) } },
+  { path: '/logout',    title: 'navigation.logout',     component: Logout,    protected: true,  beforeEnter: (to, from, next) => { next(!!localStorage.getItem('accessToken')) } },
+  { path: '/*',         title: 'navigation.not_found',  component: NotFound,  protected: false },
+];
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({ routes });
 const app = new Vue({
-    el: '#app'
-});
+  router,
+
+  template: '<App :routes="routes" />',
+
+  components: {
+    App,
+  },
+
+  data: function () {
+    return {
+      routes
+    }
+  },
+}).$mount('#app');
