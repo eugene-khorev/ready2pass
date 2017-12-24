@@ -66,8 +66,7 @@ class LoginController extends \App\Http\Controllers\Controller
         }
         
         $accessToken = $user->token();
-        $this->db
-            ->table('oauth_refresh_tokens')
+        \DB::table('oauth_refresh_tokens')
             ->where('access_token_id', $accessToken->id)
             ->update([
                 'revoked' => true

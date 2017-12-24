@@ -18,7 +18,15 @@
     </head>
     <body>
         <div class="content">
-            <div id="app"></div>
+            <?php
+                $lang_files = File::files(resource_path() . '/lang/' . App::getLocale());
+                $trans = [];
+                foreach ($lang_files as $f) {
+                    $filename = pathinfo($f)['filename'];
+                    $trans[$filename] = trans($filename);
+                }
+            ?>
+            <div id="app" data-messages="<?php echo htmlentities(json_encode($trans, JSON_UNESCAPED_UNICODE)) ?>"></div>
         </div>
         <script src="{{ mix('js/app.js') }}"></script>
     </body>

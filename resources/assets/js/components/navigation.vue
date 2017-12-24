@@ -15,7 +15,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <navigation-link v-for="(link, hash) in items" :key="hash" v-if="link.isProtected == isUserAuthorized" :hash="hash" :title="link.title"></navigation-link>
+                    <navigation-link v-for="link in items" :key="link.path" v-if="link.protected == isUserAuthorized" :hash="link.path" :title="link.title"></navigation-link>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

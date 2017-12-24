@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             return new \App\Services\Api\OAuthProxy(
                     env('PASSWORD_CLIENT_ID'),
                     env('PASSWORD_CLIENT_SECRET'),
-                    env('PASSWORD_CLIENT_SECRET'),
+                    env('REFRESH_TOKEN_COOKIE'),
                     env('REFRESH_TOKEN_EXPIRES_IN_DAYS')
                 );
         });

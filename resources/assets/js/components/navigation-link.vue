@@ -1,7 +1,7 @@
 <template>
     <li v-bind:class="{ active: isActive }">
-        <a :href="hash">
-            {{ title }}
+        <a :href="'/#' + hash">
+            {{ $trans(title) }}
             <span v-if="isActive" class="sr-only">(current)</span>
         </a>
     </li>

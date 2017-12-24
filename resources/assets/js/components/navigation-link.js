@@ -7,6 +7,6 @@ export default {
   computed: {
     isActive: function () {
       return (this.hash === window.location.hash);
-    }
+    },
   }
 }

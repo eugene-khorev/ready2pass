@@ -1,13 +1,11 @@
 <template>
-    <main-layout :isUserAuthorized="isUserAuthorized">
-        <div class="panel panel-default">
-            <div class="panel-heading">Login</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Login</div>
 
-            <div class="panel-body">
-                <login-form></login-form>
-            </div>
+        <div class="panel-body">
+            <login-form v-on:authenticated="authenticated"></login-form>
         </div>
-    </main-layout>
+    </div>
 </template>
 
 <script src="./login.js"></script>

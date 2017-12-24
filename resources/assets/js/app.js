@@ -1,37 +1,45 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-import routes from './routes';
-import oauth from './oauth';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-window.Vue = require('vue');
+import Trans from './plugins/trans';
+import OAuth from './plugins/oauth';
 
+import App from './components/app-container.vue';
+import Login from './pages/login.vue';
+import Register from './pages/register.vue';
+import Passwords from './pages/passwords.vue';
+import Logout from './pages/logout.vue';
+
+const appBlock = document.getElementById('app');
+const messages = $(appBlock).data('messages');
+
+Vue.use(Trans, { messages });
+Vue.use(OAuth);
+
+const routes = [
+  { path: '/login',     title: 'navigation.login',      component: Login,     protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
+  { path: '/register',  title: 'navigation.register',   component: Register,  protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
+  { path: '/passwords', title: 'navigation.passwords',  component: Passwords, protected: true,  beforeEnter: (to, from, next) => { next(!!localStorage.getItem('accessToken')) } },
+  { path: '/logout',    title: 'navigation.logout',     component: Logout,    protected: true,  beforeEnter: (to, from, next) => { next(!!localStorage.getItem('accessToken')) } },
+];
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({ routes });
 const app = new Vue({
-  el: '#app',
+  router,
 
-  data: {
-    currentRoute: window.location.hash,
+  template: '<App :routes="routes" />',
+
+  components: {
+    App,
   },
 
-  computed: {
-    view() {
-      const matchingView = routes[this.currentRoute];
-      return (matchingView && matchingView.isProtected === oauth.isUserAuthorized())
-        ? require('./pages/' + matchingView.component)
-        : require('./pages/404.vue');
+  data: function () {
+    return {
+      routes
     }
   },
-
-  render(h) {
-    return h(this.view);
-  }
-});
-
-window.addEventListener('popstate', () => {
-  app.currentRoute = window.location.hash
-});
+}).$mount('#app');
