@@ -4,13 +4,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Navigation Language Lines
+    | Form Language Lines
     |--------------------------------------------------------------------------
     */
 
+    'name' => 'Name',
+    'email' => 'E-Mail Address',
+    'email' => 'E-Mail Address',
+    'password' => 'Password',
+    'password_confirmation' => 'Confirm Password',
     'login' => 'Login',
     'register' => 'Register',
-    'passwords' => 'Passwords',
-    'logout' => 'Logout',
+    'forgot_password' => 'Forgot Your Password?',
 
 ];

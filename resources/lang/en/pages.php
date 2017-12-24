@@ -4,13 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Navigation Language Lines
+    | Form Language Lines
     |--------------------------------------------------------------------------
     */
 
-    'login' => 'Login',
     'register' => 'Register',
-    'passwords' => 'Passwords',
-    'logout' => 'Logout',
+    'login' => 'Login',
 
 ];
