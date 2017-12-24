@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +15,6 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
     ];
 
     /**
@@ -48,6 +49,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->expectsJson()) {
+            switch (true) {
+                case $exception instanceof UnauthorizedException:
+                    return response()->json(['error' => $exception->getMessage()], 401);
+                    
+                case $exception instanceof UnprocessableEntityHttpException:
+                    return response()->json(['error' => json_decode($exception->getMessage())], 401);
+            }
+        }
         return parent::render($request, $exception);
     }
 }
