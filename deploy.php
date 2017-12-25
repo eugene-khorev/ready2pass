@@ -31,9 +31,6 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
-// Run migration
-after('deploy:update_code', 'artisan:migrate');
-
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
 
