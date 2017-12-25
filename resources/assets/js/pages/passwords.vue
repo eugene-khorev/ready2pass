@@ -3,7 +3,9 @@
         <div class="panel-heading">Passwords</div>
 
         <div class="panel-body">
-            Here goes user password list
+          <ul class="media-list">
+            <password v-for="pwd in items" :key="pwd.id" :id="pwd.id" :name="pwd.name" :password="pwd.password" :comment="pwd.comment" :icon="pwd.icon"></password>
+          </ul>
         </div>
     </div>
 </template>

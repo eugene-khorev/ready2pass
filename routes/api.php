@@ -18,4 +18,9 @@ Route::namespace('Api')->group(function() {
     Route::post('/login', 'LoginController@login');
     Route::post('/login/refresh', 'LoginController@refresh');
     Route::post('/logout', 'LoginController@logout');
+    
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::apiResource('/passwords', 'PasswordController');
+    });
+
 });

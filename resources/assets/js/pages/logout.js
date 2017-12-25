@@ -1,6 +1,6 @@
 export default {
   render() {
-    this.$auth.logout()
+    this.$api.logout()
       .then(function() {
         this.$router.replace({ path: '/login' });
       }.bind(this))

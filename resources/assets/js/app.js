@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import _find from 'lodash/find';
 
 import Trans from './plugins/trans';
-import OAuth from './plugins/oauth';
+import Api from './plugins/api';
 
 import App from './components/app-container.vue';
 import Login from './pages/login.vue';
@@ -18,7 +18,7 @@ const appBlock = document.getElementById('app');
 const messages = $(appBlock).data('messages');
 
 Vue.use(Trans, { messages });
-Vue.use(OAuth);
+Vue.use(Api);
 
 const routes = [
   { path: '/login',     title: 'navigation.login',      component: Login,     protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
@@ -45,4 +45,14 @@ const app = new Vue({
       routes
     }
   },
+
+  created() {
+    this.$api.refreshAccessToken()
+    .then(function () {
+      this.$router.replace({ path: '/passwords' });
+    }.bind(this))
+    .catch(function () {
+      this.$router.replace({ path: '/login' });
+    }.bind(this));
+  }
 }).$mount('#app');
