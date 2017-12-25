@@ -45,7 +45,7 @@ class LoginController extends \App\Http\Controllers\Controller
      */
     public function refresh(OAuthProxy $proxy, Request $request)
     {
-        $refreshToken = $request->cookie(env('REFRESH_TOKEN_COOKIE'));
+        $refreshToken = $request->cookie(config('oauth.refresh_token_cookie'));
 
         return $proxy->makeRequest('refresh_token', [
             'refresh_token' => $refreshToken
@@ -74,7 +74,7 @@ class LoginController extends \App\Http\Controllers\Controller
         $accessToken->revoke();
 
         return response(null, 204)->withCookie(
-                \Cookie::forget(env('REFRESH_TOKEN_COOKIE'))
+                \Cookie::forget(config('oauth.refresh_token_cookie'))
             );
     }
     

@@ -12,7 +12,7 @@ export default {
   },
 
   mounted() {
-    this.$api.protectedRequest('/api/passwords', 'get')
+    this.$api.getUserPasswords()
       .then(function(response) {
         this.items = response.data.data.items;
       }.bind(this))
