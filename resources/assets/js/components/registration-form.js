@@ -15,7 +15,7 @@ export default {
       this.isInputDisabled = true;
       this.errors = {};
 
-      this.$auth.register(this.name, this.email, this.password, this.password_confirmation)
+      this.$api.register(this.name, this.email, this.password, this.password_confirmation)
         .then(function() {
           this.isInputDisabled = false;
           this.$emit('registred');

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <navigation :isUserAuthorized="$auth.isUserAuthorized()" :items="routes"></navigation>
+                <navigation :isUserAuthorized="$api.isUserAuthorized()" :items="routes"></navigation>
             </div>
         </div>
 

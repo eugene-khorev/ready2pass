@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const OAuth = {
+const Api = {
   install: function(Vue, options) {
-    Vue.prototype.$auth = {
+    Vue.prototype.$api = {
       refreshTimer: null,
 
       isUserAuthorized() {
@@ -17,14 +17,13 @@ const OAuth = {
           })
           .then(function (response) {
             localStorage.setItem('accessToken', response.data.access_token);
-            this.refreshTimer = setTimeout(
+            this.refreshTimer = setInterval(
               this.refreshAccessToken.bind(this),
-              response.data.expires_in * 1000
+              (response.data.expires_in - 60) * 1000
             );
             resolve();
           }.bind(this))
           .catch(function (error) {
-            console.log(error.response)
             localStorage.setItem('accessToken', '');
             reject(error);
           });
@@ -32,18 +31,23 @@ const OAuth = {
       },
 
       refreshAccessToken: function () {
-        axios.post('/api/login/refresh')
-        .then(function (response) {
-          localStorage.setItem('accessToken', response.data.access_token);
-          setTimeout(
-            this.refreshAccessToken.bind(this),
-            response.data.expires_in * 1000
-          );
-        }.bind(this))
-        .catch(function (error) {
-          localStorage.setItem('accessToken', '');
-          console.log(error);
-        });
+        clearInterval(this.refreshTimer);
+        return new Promise(function(resolve, reject) {
+          axios.post('/api/login/refresh')
+          .then(function (response) {
+            localStorage.setItem('accessToken', response.data.access_token);
+            this.refreshTimer = setInterval(
+              this.refreshAccessToken.bind(this),
+              (response.data.expires_in - 60) * 1000
+            );
+            resolve();
+          }.bind(this))
+          .catch(function (error) {
+            localStorage.setItem('accessToken', '');
+            console.log(error);
+            reject();
+          });
+        }.bind(this));
       },
 
       logout: function () {
@@ -53,15 +57,15 @@ const OAuth = {
             headers: { Authorization: 'Bearer ' + token }
           })
           .then(function (response) {
-            clearTimeout(this.refreshTimer);
+            clearInterval(this.refreshTimer);
             localStorage.setItem('accessToken', '');
             resolve();
           }.bind(this))
           .catch(function (error) {
-            clearTimeout(this.refreshTimer);
+            clearInterval(this.refreshTimer);
             localStorage.setItem('accessToken', '');
             reject(error);
-          });
+          }.bind(this));
         }.bind(this));
       },
 
@@ -75,9 +79,9 @@ const OAuth = {
           })
           .then(function (response) {
             localStorage.setItem('accessToken', response.data.access_token);
-            this.refreshTimer = setTimeout(
+            this.refreshTimer = setInterval(
               this.refreshAccessToken.bind(this),
-              response.data.expires_in * 1000
+              (response.data.expires_in - 60) * 1000
             );
             resolve();
           }.bind(this))
@@ -87,8 +91,38 @@ const OAuth = {
           });
         }.bind(this));
       },
+
+      protectedRequest(url, method, data) {
+        const request = function(resolve, reject) {
+          const token = localStorage.getItem('accessToken');
+          axios({
+            url,
+            method,
+            data,
+            headers: { Authorization: 'Bearer ' + token }
+          })
+          .then(resolve)
+          .catch(reject);
+        };
+
+        return new Promise(function (resolve, reject) {
+          request(function(response) {
+            resolve(response);
+          }, function () {
+            this.refreshAccessToken()
+            .then(function () {
+              request(resolve, reject)
+            })
+            .catch(reject);
+          }.bind(this))
+        }.bind(this));
+      },
+
+      getUserPasswords() {
+        return this.protectedRequest('/api/passwords', 'get')
+      }
     }
   },
 }
 
-export default OAuth;
+export default Api;

@@ -13,7 +13,7 @@ export default {
       this.isInputDisabled = true;
       this.errors = {};
 
-      this.$auth.authenticate(this.email, this.password,)
+      this.$api.authenticate(this.email, this.password,)
         .then(function() {
           this.isInputDisabled = false;
           this.$emit('authenticated');
