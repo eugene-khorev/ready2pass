@@ -120,7 +120,17 @@ const Api = {
 
       getUserPasswords() {
         return this.protectedRequest('/api/passwords', 'get')
-      }
+      },
+
+      getUserPasswordItem(id) {
+        return this.protectedRequest('/api/passwords/' + id, 'get');
+      },
+
+      saveUserPasswordItem(id, name, password, comment, icon) {
+        return this.protectedRequest('/api/passwords', 'post', {
+          id, name, password, comment, icon
+        });
+      },
     }
   },
 }

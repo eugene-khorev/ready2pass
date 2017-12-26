@@ -1,6 +1,6 @@
 <template>
     <div class="panel panel-default">
-        <div class="panel-heading">Passwords</div>
+        <div class="panel-heading">{{ $trans('navigation.passwords') }}</div>
 
         <div class="panel-body">
           <ul class="media-list">

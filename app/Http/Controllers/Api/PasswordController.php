@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use App\Password;
+use App\Http\Resources\Password as PasswordResource;
 use App\Http\Resources\PasswordCollection;
+use App\Http\Requests\Api\Password as PasswordRequest;
 
 class PasswordController extends \App\Http\Controllers\Controller
 {
@@ -24,12 +26,21 @@ class PasswordController extends \App\Http\Controllers\Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Api\Password  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PasswordRequest $request)
     {
-        //
+        $password = Password::findOrNew($request->id);
+        
+        $password->user_id= \Auth::id();
+        $password->name = $request->get('name');
+        $password->password= $request->get('password');
+        $password->comment = $request->get('comment');
+        $password->icon= $request->get('icon');
+        $password->save();
+        
+        return $password;
     }
 
     /**
@@ -40,7 +51,7 @@ class PasswordController extends \App\Http\Controllers\Controller
      */
     public function show(Password $password)
     {
-        //
+        return new PasswordResource($password);
     }
 
     /**
