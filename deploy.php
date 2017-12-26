@@ -30,10 +30,17 @@ host('stuck-online.info')
 
 task('build', function () {
     run('cd {{release_path}} && build');
+});
+
+task('prepare', function () {
     run('cd {{release_path}} && npm run prod');
     run('cd {{release_path}} && php artisan route:cache');
-    run('cd {{release_path}} && php artisan config:cache');
+    run('service php7.0-fpm restart');
 });
+
+// Prepare for release
+
+after('build', 'prepare');
 
 // Install NPM packages
 
