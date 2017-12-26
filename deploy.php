@@ -2,6 +2,7 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
+require 'recipe/npm.php';
 
 // Project name
 set('application', 'stuck-online.info');
@@ -29,9 +30,17 @@ host('stuck-online.info')
 
 task('build', function () {
     run('cd {{release_path}} && build');
+    run('cd {{release_path}} && npm run prod');
+    run('cd {{release_path}} && php artisan route:cache');
+    run('cd {{release_path}} && php artisan config:cache');
 });
 
+// Install NPM packages
+
+after('deploy:update_code', 'npm:install');
+
 // [Optional] if deploy fails automatically unlock.
+
 after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
