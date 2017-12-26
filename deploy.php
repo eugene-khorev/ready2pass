@@ -2,7 +2,7 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
-require 'recipe/npm.php';
+require 'vendor/deployer/recipes/recipe/npm.php';
 
 // Project name
 set('application', 'stuck-online.info');
