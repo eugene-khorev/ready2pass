@@ -10,7 +10,8 @@ return [
 
     'login' => 'Login',
     'register' => 'Register',
-    'passwords' => 'Passwords',
     'logout' => 'Logout',
+    'passwords' => 'Passwords',
+    'password-item' => 'Edit password',
 
 ];

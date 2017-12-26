@@ -16,5 +16,8 @@ return [
     'login' => 'Login',
     'register' => 'Register',
     'forgot_password' => 'Forgot Your Password?',
+    'password-name' => 'Name',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
 
 ];
