@@ -40,7 +40,7 @@ task('prepare', function () {
 
 // Prepare for release
 
-after('build', 'prepare');
+after('deploy', 'prepare');
 
 // Install NPM packages
 
