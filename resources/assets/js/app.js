@@ -21,6 +21,8 @@ const messages = $(appBlock).data('messages');
 Vue.use(Trans, { messages });
 Vue.use(Api);
 
+const currentRoutePath = window.location.hash.substr(1);
+
 const routes = [
   // { path: '/welcome',       title: 'navigation.welcome',        show: false, component: Welcome,      protected: false },
   { path: '/login',         title: 'navigation.login',          show: true,  component: Login,        protected: false, beforeEnter: (to, from, next) => { next( !localStorage.getItem('accessToken')) } },
@@ -52,9 +54,11 @@ const app = new Vue({
   created() {
     this.$api.refreshAccessToken()
     .then(function () {
-      // this.$router.replace({ path: '/passwords' });
+      console.log('refreshed', window.location.hash);
+      this.$router.replace({ path: currentRoutePath });
     }.bind(this))
     .catch(function () {
+      console.log('not refreshed', window.location.hash);
       this.$router.replace({ path: '/login' });
     }.bind(this));
   }
