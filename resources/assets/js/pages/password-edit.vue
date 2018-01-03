@@ -4,7 +4,7 @@
 
         <div class="panel-body">
           <ul class="media-list">
-            <password-form :data="password"></password-form>
+            <password-form :data="password" :disabled="isInputDisabled"></password-form>
           </ul>
         </div>
     </div>

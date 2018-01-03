@@ -17,6 +17,7 @@ return [
     'register' => 'Register',
     'forgot_password' => 'Forgot Your Password?',
     'password-name' => 'Name',
+    'comment' => 'Comment',
     'save' => 'Save',
     'cancel' => 'Cancel',
 

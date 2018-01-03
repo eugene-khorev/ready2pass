@@ -4,7 +4,7 @@
             <label for="name" class="col-md-4 control-label">{{ $trans('forms.password-name') }}</label>
 
             <div class="col-md-6">
-                <input id="name" type="text" class="form-control" name="name" placeholder="Name" autofocus v-model="name" :disabled="isInputDisabled">
+                <input id="name" type="text" class="form-control" name="name" autofocus v-model="name" :disabled="isInputDisabled">
                 <span class="help-block" v-if="errors['email']">
                     <strong v-for="message in errors['email']">{{ message }}</strong>
                 </span>

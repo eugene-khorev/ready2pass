@@ -1,12 +1,12 @@
 export default {
   props: [
-    'data'
+    'data',
+    'disabled',
   ],
 
   data: function() {
-    console.log('data', this.data);
     return {
-      isInputDisabled: false,
+      isInputDisabled: this.disabled,
       errors: {},
       id: null,
       name: null,
@@ -17,6 +17,9 @@ export default {
   },
 
   watch: {
+    disabled: function (newValue) {
+      this.isInputDisabled = newValue;
+    },
     data: function () {
       this.id = this.data.id;
       this.name = this.data.name;
