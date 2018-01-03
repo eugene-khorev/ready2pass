@@ -54,11 +54,9 @@ const app = new Vue({
   created() {
     this.$api.refreshAccessToken()
     .then(function () {
-      console.log('refreshed', window.location.hash);
       this.$router.replace({ path: currentRoutePath });
     }.bind(this))
     .catch(function () {
-      console.log('not refreshed', window.location.hash);
       this.$router.replace({ path: '/login' });
     }.bind(this));
   }
